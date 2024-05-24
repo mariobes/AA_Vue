@@ -11,6 +11,11 @@
     const loadCrypto = () => {
         const cryptoId = parseInt(route.params.id as string)
         crypto.value = store.cryptos.find(c => c.id === cryptoId) || null
+
+        if (!crypto.value) {
+          const cryptoName = route.params.name as string
+          crypto.value = store.cryptos.find(c => c.name.toLowerCase() === cryptoName.toLowerCase()) || null
+        }
     }
 
     onMounted(() => {

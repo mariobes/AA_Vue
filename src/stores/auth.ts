@@ -48,7 +48,7 @@ export function getToken() {
 
 export async function getUserData(email: string) {
     try {
-        const userDataResponse = await fetch(`http://localhost:4746/ByEmail?userEmail=${email}`, {
+        const userDataResponse = await fetch(`http://localhost:4746/Users/ByEmail?userEmail=${email}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${getToken()}`

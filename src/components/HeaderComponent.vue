@@ -1,16 +1,16 @@
 <script setup lang="ts">
+import router from '@/router';
 import { ref } from 'vue'
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink } from 'vue-router'
 
 const searchQuery = ref('')
 
 const searchCrypto = () => {
-  console.log('Searching for:', searchQuery.value)
+  if (searchQuery.value.trim() !== '') {
+    router.push({ name: 'cryptoDetailsByName', params: { name: searchQuery.value.trim() } })
+  }
 }
 
-const signIn = () => {
-  console.log('Sign in clicked')
-}
 </script>
 
 <template>
@@ -24,6 +24,7 @@ const signIn = () => {
             single-line
             hide-details
             @click:append="searchCrypto"
+            @keyup.enter="searchCrypto"
         ></v-text-field>
         <RouterLink to="/signIn" class="sign-in-icon">
             <v-icon>mdi-account</v-icon>

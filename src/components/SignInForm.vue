@@ -15,7 +15,6 @@ const handleLogin = async () => {
         if (loggedIn) {
             const userData = await getUserData(email.value)
             router.push({ name: userData.role === 'admin' ? 'home' :'privateZoneUser', params: { id: userData.id } })
-            alert(userData.role)
         } else {
             errorMessage.value = 'Error. Las credenciales son incorrectas'
         }
