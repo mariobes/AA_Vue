@@ -15,9 +15,9 @@ const router = createRouter({
       component: () => import('../views/SignInView.vue')
     },
     {
-      path: '/cryptoDetails',
+      path: '/cryptoDetails/:id',
       name: 'cryptoDetails',
-      component: () => import('../views/CryptoDetails.vue')
+      component: () => import('../views/CryptoDetailsView.vue')
     }
   ]
 })
