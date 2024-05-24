@@ -18,6 +18,11 @@ const router = createRouter({
       path: '/cryptoDetails/:id',
       name: 'cryptoDetails',
       component: () => import('../views/CryptoDetailsView.vue')
+    },
+    {
+      path: '/privateZoneUser/:id',
+      name: 'privateZoneUser',
+      component: () => import('../views/PrivateUserZoneView.vue')
     }
   ]
 })

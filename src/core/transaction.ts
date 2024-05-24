@@ -1,8 +1,11 @@
 export interface Transaction {
     id: number
-    name: string
-    email: string
-    password: string
-    phone: string
-    dni: string
+    idUser: number
+    idCrypto?: number
+    concept: string
+    amount: number
+    date: Date
+    Charge: number
+    payment_Method?: string
+    
   }
