@@ -43,8 +43,13 @@
             <v-card-subtitle>Fecha de Registro: {{ new Date(crypto.registerDate).toLocaleDateString() }}</v-card-subtitle>
             <v-card-subtitle>Descentralizada: {{ crypto.descentralized ? 'Sí' : 'No' }}</v-card-subtitle>
             <div v-if="role === 'admin'">
-              <RouterLink :to="{ path: `/updateCrypto/${crypto.id}` }" class="edit-btn">
+              <RouterLink :to="{ path: `/updateCrypto/${crypto.id}` }" class="card-btn">
                 <v-btn>Editar</v-btn>
+              </RouterLink>
+            </div>
+            <div v-if="role === 'user'">
+              <RouterLink :to="{ path: `/updateCrypto/${crypto.id}` }" class="card-btn">
+                <v-btn>Comprar</v-btn>
               </RouterLink>
             </div>
           </v-card>
@@ -73,7 +78,7 @@
     border: 1px solid #52a7f7;
   }
 
-  .edit-btn {
+  .card-btn {
     text-decoration: none;
   }
 </style>

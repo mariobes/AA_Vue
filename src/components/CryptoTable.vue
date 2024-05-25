@@ -1,11 +1,21 @@
-<script setup lang="ts">
-    import { RouterLink } from 'vue-router'
-    import { useCryptosStore } from '@/stores/cryptos'
-    import { useAuth } from '@/stores/auth'
+<script setup>
+import { ref } from 'vue'
+import { useCryptosStore } from '@/stores/cryptos'
+import { useAuth } from '@/stores/auth'
+import PopUpBuyCrypto from '@/components/PopUpBuyCrypto.vue'
 
-    const store = useCryptosStore()
+const store = useCryptosStore()
+const { role } = useAuth()
 
-    const { role } = useAuth()
+const dialogVisible = ref(false)
+
+const openDialog = () => {
+  dialogVisible.value = true
+}
+
+const closeDialog = () => {
+  dialogVisible.value = false
+}
 </script>
 
 <template>
@@ -28,9 +38,6 @@
           <th class="narrow-column">
             <h2>Descentralizada</h2>
           </th>
-          <th v-if="role === 'admin'">
-            <h2>Modificar</h2>
-          </th>
         </tr>
       </thead>
       <tbody>
@@ -51,6 +58,10 @@
             <RouterLink :to="{ path: `/updateCrypto/${crypto.id}` }">
               <v-btn>Editar</v-btn>
             </RouterLink>
+          </td>
+          <td v-if="role === 'user'">
+            <PopUpBuyCrypto :dialogVisible="dialogVisible" @closeDialog="closeDialog" />
+            <v-btn @click="openDialog">Comprar</v-btn>
           </td>
         </tr>
       </tbody>

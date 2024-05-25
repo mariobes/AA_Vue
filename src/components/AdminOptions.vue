@@ -26,10 +26,8 @@ const listUsers = () => {
     </div>
     <div class="d-flex justify-center adminOptions">
       <v-btn color="primary" @click="listUsers">Lista de usuarios</v-btn>
-      <v-btn color="red" @click="handleLogout" v-if="isLoggedIn">Logout</v-btn>
+      <v-btn color="red" @click="handleLogout" v-if="isLoggedIn">Cerrar sesión</v-btn>
     </div>
-
-
 </template>
 
 
