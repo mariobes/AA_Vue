@@ -11,6 +11,11 @@ const handleLogout = () => {
   isLoggedIn.value = false
   router.push('/')
 }
+
+const listUsers = () => {
+  isLoggedIn.value = false
+  router.push('/listUsers')
+}
 </script>
 
 
@@ -20,7 +25,7 @@ const handleLogout = () => {
       <h2>Has iniciado sesión como Administrador</h2>
     </div>
     <div class="d-flex justify-center adminOptions">
-      <v-btn color="primary">Lista de usuarios</v-btn>
+      <v-btn color="primary" @click="listUsers">Lista de usuarios</v-btn>
       <v-btn color="red" @click="handleLogout" v-if="isLoggedIn">Logout</v-btn>
     </div>
 

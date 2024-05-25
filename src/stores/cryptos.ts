@@ -1,40 +1,39 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { Crypto } from '@/core/crypto'
+import type { Crypto, UpdateCrypto } from '@/core/crypto'
 
 
 export const useCryptosStore = defineStore('cryptos', () => {
     const cryptos = ref<Crypto[]>([])
 
 
-async function FetchAllCryptos() {
+async function GetAllCryptos() {
     try {
         const response = await fetch('http://localhost:4746/Cryptos')
         const cryptosInfo = await response.json()
-
-        console.log('Información recibida:', cryptosInfo)
-
         cryptos.value = cryptosInfo
-    } catch (ex) {
-        console.error('Error al obtener las criptomonedas.', ex)
+    } catch (error) {
+        console.error('Error al obtener las criptomonedas.', error)
     }
 }
 
-async function DeleteCrypto(id: number) {
+async function UpdateCrypto(id: number, updatedCrypto: UpdateCrypto, token: string | null) {
     try {
         await fetch(`http://localhost:4746/Cryptos/${id}`, {
-        method: 'DELETE',
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(updatedCrypto)
       })
-      cryptos.value = cryptos.value.filter((Crypto) => Crypto.id !== id)
-      alert('Criptomoneda eliminada correctamente')
-    } catch (ex) {
-      console.error('Error al borrar la criptomoneda. ', ex)
+    } catch (error) {
+      console.error('Error al modificar la criptomoneda. ', error)
     }
-  }
-
+}
     
 
-    return { cryptos, FetchAllCryptos, DeleteCrypto }
+  return { cryptos, GetAllCryptos, UpdateCrypto }
 })
 
 

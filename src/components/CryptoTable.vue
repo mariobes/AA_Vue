@@ -1,9 +1,11 @@
 <script setup lang="ts">
-    import { RouterLink, RouterView } from 'vue-router'
-    import type { Crypto } from '@/core/crypto'
+    import { RouterLink } from 'vue-router'
     import { useCryptosStore } from '@/stores/cryptos'
+    import { useAuth } from '@/stores/auth'
 
     const store = useCryptosStore()
+
+    const { role } = useAuth()
 </script>
 
 <template>
@@ -23,9 +25,12 @@
           <th>
             <h2>Desarrollador</h2>
           </th>
-          <!--<th>
-            <h2>Borrar</h2>
-          </th>-->
+          <th class="narrow-column">
+            <h2>Descentralizada</h2>
+          </th>
+          <th v-if="role === 'admin'">
+            <h2>Modificar</h2>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -35,13 +40,18 @@
         >
           <td>
             <h4>
-              <RouterLink :to="{ path: `/cryptoDetails/${crypto.id}` }" class="crypto-name">{{  crypto.name }}</RouterLink>
+              <RouterLink :to="{ path: `/cryptoDetails/${crypto.id}` }" class="crypto-name">{{ crypto.name }}</RouterLink>
             </h4>
           </td>
           <td>{{ crypto.symbol }}</td>
           <td>{{ crypto.value }} €</td>
           <td>{{ crypto.developer }}</td>
-          <!--<td><v-btn @click="store.DeleteCrypto(crypto.id)">Eliminar</v-btn></td>-->
+          <td>{{ crypto.descentralized ? 'Sí' : 'No' }}</td>
+          <td v-if="role === 'admin'">
+            <RouterLink :to="{ path: `/updateCrypto/${crypto.id}` }">
+              <v-btn>Editar</v-btn>
+            </RouterLink>
+          </td>
         </tr>
       </tbody>
     </v-table>
@@ -65,6 +75,10 @@
       text-align: center !important;
   }
 
+  .narrow-column {
+    max-width: 100px;
+  }
+
   .crypto-name {
     text-decoration: none;
     color: inherit; 
@@ -73,5 +87,11 @@
   .crypto-name:hover {
     text-decoration: underline;
     color: #000; 
+  }
+
+  .v-btn {
+    color: #52a7f7;
+    font-weight: bold;
+    border: 1px solid #52a7f7;
   }
 </style>

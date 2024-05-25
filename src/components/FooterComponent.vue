@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <v-footer>2024 — CryptoApp, Desarrollo en Entorno Cliente</v-footer>
+    <v-footer>© 2024 — CryptoApp, Desarrollo en Entorno Cliente</v-footer>
 </template>
 
 <style scoped>

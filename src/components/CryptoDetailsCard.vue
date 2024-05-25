@@ -3,6 +3,9 @@
     import { useRoute } from 'vue-router'
     import type { Crypto } from '@/core/crypto'
     import { useCryptosStore } from '@/stores/cryptos'
+    import { useAuth } from '@/stores/auth'
+
+    const { role } = useAuth()
 
     const store = useCryptosStore()
     const route = useRoute()
@@ -39,6 +42,11 @@
             <v-card-subtitle>Valor: {{ crypto.value }} €</v-card-subtitle>
             <v-card-subtitle>Fecha de Registro: {{ new Date(crypto.registerDate).toLocaleDateString() }}</v-card-subtitle>
             <v-card-subtitle>Descentralizada: {{ crypto.descentralized ? 'Sí' : 'No' }}</v-card-subtitle>
+            <div v-if="role === 'admin'">
+              <RouterLink :to="{ path: `/updateCrypto/${crypto.id}` }" class="edit-btn">
+                <v-btn>Editar</v-btn>
+              </RouterLink>
+            </div>
           </v-card>
         </v-col>
       </v-row>
@@ -55,4 +63,17 @@
         max-width: 300px;
     }
 
+    .v-btn {
+    margin-top: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    color: #52a7f7;
+    font-weight: bold;
+    border: 1px solid #52a7f7;
+  }
+
+  .edit-btn {
+    text-decoration: none;
+  }
 </style>
