@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { login, getUserData } from '@/stores/auth'
 
@@ -7,6 +7,15 @@ const email = ref('')
 const password = ref('')
 const errorMessage = ref('')
 const router = useRouter()
+
+onMounted(() => {
+    const storedEmail = localStorage.getItem('email')
+    const storedPassword = localStorage.getItem('password')
+    if (storedEmail && storedPassword) {
+        email.value = storedEmail
+        password.value = storedPassword
+    }
+})
 
 const handleLogin = async () => {
     try {

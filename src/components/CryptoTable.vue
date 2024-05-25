@@ -52,7 +52,7 @@
   .table-container {
       display: flex;
       justify-content: center;
-      margin-top: 80px;
+      margin-top: 60px;
   }
 
   .v-table {

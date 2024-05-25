@@ -1,16 +1,14 @@
-// auth.ts
-
-import { ref } from 'vue'
+import { reactive, toRefs } from 'vue'
 
 interface AuthState {
   token: string | null;
-  role: string | null; 
+  role: string | null;
 }
 
-const state: AuthState = {
-  token: null,
-  role: null, 
-}
+const state: AuthState = reactive({
+  token: localStorage.getItem('token'), 
+  role: localStorage.getItem('role'), 
+})
 
 export async function login(email: string, password: string) {
     try {
@@ -19,15 +17,16 @@ export async function login(email: string, password: string) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                email,
-                password
-            })
+            body: JSON.stringify({ email, password })
         })
 
         if (response.ok) {
             const token = await response.text()
             setToken(token)
+            const userData = await getUserData(email)
+            setRole(userData.role)
+            localStorage.setItem('email', email)
+            localStorage.setItem('password', password)
             return true
         } else {
             return false
@@ -40,10 +39,28 @@ export async function login(email: string, password: string) {
 
 export function setToken(token: string | null) {
     state.token = token
+    if (token) {
+        localStorage.setItem('token', token)
+    } else {
+        localStorage.removeItem('token')
+    }
 }
 
 export function getToken() {
-    return state.token
+    return state.token || localStorage.getItem('token')
+}
+
+export function setRole(role: string | null) {
+    state.role = role
+    if (role) {
+        localStorage.setItem('role', role)
+    } else {
+        localStorage.removeItem('role')
+    }
+}
+
+export function getRole() {
+    return state.role || localStorage.getItem('role')
 }
 
 export async function getUserData(email: string) {
@@ -60,4 +77,22 @@ export async function getUserData(email: string) {
         console.error('Se ha producido un error al obtener los datos del usuario: ', error)
         throw error
     }
+}
+
+export function logout() {
+    setToken(null)
+    setRole(null)
+}
+
+export function useAuth() {
+  return {
+    ...toRefs(state),
+    login,
+    setToken,
+    getToken,
+    setRole,
+    getRole,
+    getUserData,
+    logout
+  }
 }
