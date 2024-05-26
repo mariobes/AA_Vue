@@ -1,21 +1,10 @@
 <script setup>
-import { ref } from 'vue'
 import { useCryptosStore } from '@/stores/cryptos'
 import { useAuth } from '@/stores/auth'
-import PopUpBuyCrypto from '@/components/PopUpBuyCrypto.vue'
 
 const store = useCryptosStore()
 const { role } = useAuth()
 
-const dialogVisible = ref(false)
-
-const openDialog = () => {
-  dialogVisible.value = true
-}
-
-const closeDialog = () => {
-  dialogVisible.value = false
-}
 </script>
 
 <template>
@@ -55,13 +44,45 @@ const closeDialog = () => {
           <td>{{ crypto.developer }}</td>
           <td>{{ crypto.descentralized ? 'Sí' : 'No' }}</td>
           <td v-if="role === 'admin'">
-            <RouterLink :to="{ path: `/updateCrypto/${crypto.id}` }">
+            <RouterLink :to="{ path: `/updateCrypto/${crypto.id}` }" class="card-btn">
               <v-btn>Editar</v-btn>
             </RouterLink>
           </td>
           <td v-if="role === 'user'">
-            <PopUpBuyCrypto :dialogVisible="dialogVisible" @closeDialog="closeDialog" />
-            <v-btn @click="openDialog">Comprar</v-btn>
+            <v-dialog max-width="300">
+                  <template v-slot:activator="{ props: activatorProps }">
+                    <v-btn
+                      v-bind="activatorProps"
+                      text="Comprar"
+                      variant="flat"
+                    ></v-btn>
+                  </template>
+                  <template v-slot:default="{ isActive }">
+                    <v-card>
+                      <v-card-title>
+                          <div class="title-popup">Comprar {{ crypto.name }}
+                          <v-btn class="close-btn" size="small" icon @click="isActive.value = false">
+                            <v-icon color="grey lighten-1">mdi-close</v-icon>
+                          </v-btn>
+                        </div>
+                      </v-card-title>                      
+                      <v-card-text>
+                        <v-text-field
+                          v-model="cryptoName"
+                          label="EUROS"
+                          type="number"
+                        ></v-text-field>
+                      </v-card-text>
+                      <v-card-actions>
+                        <v-btn
+                          @click="handleBuy"
+                        >
+                          Comprar
+                        </v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </template>
+              </v-dialog>
           </td>
         </tr>
       </tbody>
@@ -101,8 +122,30 @@ const closeDialog = () => {
   }
 
   .v-btn {
-    color: #52a7f7;
-    font-weight: bold;
-    border: 1px solid #52a7f7;
+      display: flex;
+      margin-left: auto;
+      margin-right: auto;
+      color: #52a7f7;
+      font-weight: bold;
+      border: 1px solid #52a7f7;
+  }
+
+  .card-btn {
+    text-decoration: none;
+  }
+
+  .close-btn {
+    border: none;
+  }
+  
+  .title-popup {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    margin-top: 10px;
+  }
+
+  .title-popup .v-btn {
+    margin-left: 60px;
   }
 </style>

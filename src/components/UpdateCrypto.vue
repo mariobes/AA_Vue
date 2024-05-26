@@ -145,7 +145,7 @@
   }
 
   .v-btn {
-        background-color: #52a7f7;
-        margin-bottom: 50px
-    }
+    background-color: #52a7f7;
+    margin-bottom: 50px
+  }
 </style>

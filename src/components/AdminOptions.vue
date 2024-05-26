@@ -22,7 +22,7 @@ const listUsers = () => {
 
 <template>
     <div class="d-flex justify-center adminTitle">
-      <h2>Has iniciado sesión como Administrador</h2>
+      <h2>Modo Administrador</h2>
     </div>
     <div class="d-flex justify-center adminOptions">
       <v-btn color="primary" @click="listUsers">Lista de usuarios</v-btn>
