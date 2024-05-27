@@ -1,10 +1,43 @@
-<script setup>
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { useCryptosStore } from '@/stores/cryptos'
-import { useAuth } from '@/stores/auth'
+import { useTransactionsStore } from '@/stores/transactions'
+import { getToken, useAuth, getUserData } from '@/stores/auth'
 
-const store = useCryptosStore()
+const token = getToken()
 const { role } = useAuth()
 
+const storeCryptos = useCryptosStore()
+const storeTransactions = useTransactionsStore()
+
+const storedEmail = localStorage.getItem('email')
+
+const userData = ref({})
+const amount = ref<number>(0)
+const dialog = ref(false) 
+
+const handleBuy = async (cryptoId) => {
+  const success = await storeTransactions.BuyCrypto(userData.value.id, cryptoId, amount.value, token)
+  if (success) {
+    userData.value.cash -= parseFloat(amount.value.toString()) 
+    userData.value.wallet += parseFloat(amount.value.toString()) 
+    amount.value = 0
+    console.log('Compra realizada con éxito')
+    dialog.value = false 
+  } else {
+    console.error('Error al comprar la criptomoneda')
+  }
+}
+
+onMounted(async () => {
+  try {
+    if (storedEmail) {
+      userData.value = await getUserData(storedEmail)
+    }
+  } catch (error) {
+    console.error('Error al obtener los datos del usuario: ', error)
+  }
+})
 </script>
 
 <template>
@@ -31,7 +64,7 @@ const { role } = useAuth()
       </thead>
       <tbody>
         <tr
-          v-for="crypto in store.cryptos"
+          v-for="crypto in storeCryptos.cryptos"
           :key="crypto.id"
         >
           <td>
@@ -50,38 +83,38 @@ const { role } = useAuth()
           </td>
           <td v-if="role === 'user'">
             <v-dialog max-width="300">
-                  <template v-slot:activator="{ props: activatorProps }">
+              <template v-slot:activator="{ props: activatorProps }">
+                <v-btn
+                  v-bind="activatorProps"
+                  text="Comprar"
+                  variant="flat"
+                ></v-btn>
+              </template>
+              <template v-slot:default="{ isActive }">
+                <v-card>
+                  <v-card-title>
+                      <div class="title-popup">Comprar {{ crypto.name }}
+                      <v-btn class="close-btn" size="small" icon @click="isActive.value = false">
+                        <v-icon color="grey lighten-1">mdi-close</v-icon>
+                      </v-btn>
+                    </div>
+                  </v-card-title>                      
+                  <v-card-text>
+                    <v-text-field
+                      v-model="amount"
+                      label="EUROS"
+                      type="number"
+                    ></v-text-field>
+                  </v-card-text>
+                  <v-card-actions>
                     <v-btn
-                      v-bind="activatorProps"
-                      text="Comprar"
-                      variant="flat"
-                    ></v-btn>
-                  </template>
-                  <template v-slot:default="{ isActive }">
-                    <v-card>
-                      <v-card-title>
-                          <div class="title-popup">Comprar {{ crypto.name }}
-                          <v-btn class="close-btn" size="small" icon @click="isActive.value = false">
-                            <v-icon color="grey lighten-1">mdi-close</v-icon>
-                          </v-btn>
-                        </div>
-                      </v-card-title>                      
-                      <v-card-text>
-                        <v-text-field
-                          v-model="cryptoName"
-                          label="EUROS"
-                          type="number"
-                        ></v-text-field>
-                      </v-card-text>
-                      <v-card-actions>
-                        <v-btn
-                          @click="handleBuy"
-                        >
-                          Comprar
-                        </v-btn>
-                      </v-card-actions>
-                    </v-card>
-                  </template>
+                      @click="handleBuy(crypto.id)"
+                    >
+                      Comprar
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </template>
               </v-dialog>
           </td>
         </tr>

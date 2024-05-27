@@ -32,8 +32,8 @@ const makeDeposit = async () => {
       await transactionsStore.GetTransactions(userData.value.id, token)
       userData.value.cash += parseFloat(amount.value.toString()) 
       amount.value = 0
+      console.log('Depósito realizado con éxito')
       dialog.value = false 
-      router.push({ name: 'privateZoneUser', params: { id: userData.value.id } })
     }
   } catch (error) {
     console.error('Error al realizar el depósito: ', error)

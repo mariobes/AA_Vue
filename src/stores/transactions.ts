@@ -78,5 +78,33 @@ async function MakeDeposit(userId: number, amount: number, token: string | null)
   }
 }
 
-return { transactions, cryptos, GetTransactions, GetCryptos, MakeDeposit }
+async function BuyCrypto(userId: number, cryptoId: number, amount: number, token: string | null) {
+  try {
+      const response = await fetch(`http://localhost:4746/Transactions/buycrypto`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+             userId,
+             cryptoId,
+             amount
+          })
+        })
+
+        if (response.ok) {
+          return true
+        } else {
+          console.error('Error al realizar la compra. Respuesta no exitosa.')
+          return false
+        }
+
+  } catch (error) {
+      console.error('Error al realizar la compra: ', error)
+      throw error;
+  }
+}
+
+return { transactions, cryptos, GetTransactions, GetCryptos, MakeDeposit, BuyCrypto }
 })
