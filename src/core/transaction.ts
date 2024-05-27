@@ -1,7 +1,7 @@
 export interface Transaction {
     id: number
-    idUser: number
-    idCrypto?: number
+    userId: number
+    cryptoId?: number
     concept: string
     amount: number
     date: Date

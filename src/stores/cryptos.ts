@@ -7,7 +7,7 @@ export const useCryptosStore = defineStore('cryptos', () => {
     const cryptos = ref<Crypto[]>([])
 
 
-async function GetAllCryptos() {
+  async function GetAllCryptos() {
     try {
         const response = await fetch('http://localhost:4746/Cryptos')
         const cryptosInfo = await response.json()
@@ -15,7 +15,7 @@ async function GetAllCryptos() {
     } catch (error) {
         console.error('Error al obtener las criptomonedas.', error)
     }
-}
+  }
 
 async function UpdateCrypto(id: number, updatedCrypto: UpdateCrypto, token: string | null) {
     try {

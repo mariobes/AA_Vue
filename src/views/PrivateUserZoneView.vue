@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import PrivateUserZoneOptions from '@/components/PrivateUserZoneOptions.vue'
     import PrivateUserZoneTransactions from '@/components/PrivateUserZoneTransactions.vue'
-
+    import PrivateUserZoneCryptos from '@/components/PrivateUserZoneCryptos.vue'
 
 </script>
 
@@ -9,5 +9,6 @@
 
     <PrivateUserZoneOptions></PrivateUserZoneOptions>
     <PrivateUserZoneTransactions></PrivateUserZoneTransactions>
+    <PrivateUserZoneCryptos></PrivateUserZoneCryptos>
 
 </template>
