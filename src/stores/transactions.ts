@@ -24,7 +24,7 @@ export const useTransactionsStore = defineStore('transactions', () => {
           }
 
     } catch (error) {
-        console.error('Error al obtener las transacciones.', error)
+        console.error('Error al obtener las transacciones: ', error)
         throw error;
     }
   }
@@ -45,11 +45,38 @@ async function GetCryptos(userId: number, token: string | null) {
           }
 
     } catch (error) {
-        console.error('Error al obtener las criptomonedas.', error)
+        console.error('Error al obtener las criptomonedas: ', error)
         throw error;
     }
 }
 
+async function MakeDeposit(userId: number, amount: number, token: string | null) {
+  try {
+      const response = await fetch(`http://localhost:4746/Transactions/deposit`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+             userId,
+             amount,
+             paymentMethod: 'Tarjeta de crédito'
+          })
+        })
 
-return { transactions, cryptos, GetTransactions, GetCryptos }
+        if (response.ok) {
+          return true
+        } else {
+          console.error('Error al realizar el depósito. Respuesta no exitosa.')
+          return false
+        }
+
+  } catch (error) {
+      console.error('Error al realizar el depósito: ', error)
+      throw error;
+  }
+}
+
+return { transactions, cryptos, GetTransactions, GetCryptos, MakeDeposit }
 })

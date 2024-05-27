@@ -21,7 +21,7 @@ export const useUsersStore = defineStore('users', () => {
           }
 
     } catch (error) {
-        console.error('Error al obtener los usuarios.', error)
+        console.error('Error al obtener los usuarios: ', error)
         throw error;
     }
 }

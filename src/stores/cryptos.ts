@@ -13,7 +13,7 @@ export const useCryptosStore = defineStore('cryptos', () => {
         const cryptosInfo = await response.json()
         cryptos.value = cryptosInfo
     } catch (error) {
-        console.error('Error al obtener las criptomonedas.', error)
+        console.error('Error al obtener las criptomonedas: ', error)
     }
   }
 
@@ -28,7 +28,7 @@ async function UpdateCrypto(id: number, updatedCrypto: UpdateCrypto, token: stri
           body: JSON.stringify(updatedCrypto)
       })
     } catch (error) {
-      console.error('Error al modificar la criptomoneda. ', error)
+      console.error('Error al modificar la criptomoneda: ', error)
     }
 }
     
