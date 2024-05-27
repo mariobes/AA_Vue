@@ -1,12 +1,13 @@
 <script setup lang="ts">
     import PrivateUserZoneOptions from '@/components/PrivateUserZoneOptions.vue'
-    import PrivateUserZoneInformation from '@/components/PrivateUserZoneInformation.vue'
+    import PrivateUserZoneTransactions from '@/components/PrivateUserZoneTransactions.vue'
+
 
 </script>
 
 <template>
 
     <PrivateUserZoneOptions></PrivateUserZoneOptions>
-    <PrivateUserZoneInformation></PrivateUserZoneInformation>
+    <PrivateUserZoneTransactions></PrivateUserZoneTransactions>
 
 </template>

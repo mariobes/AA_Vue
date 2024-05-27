@@ -7,7 +7,7 @@ const router = useRouter()
 const isLoggedIn = !!getToken()
 
 const storedEmail = localStorage.getItem('email')
-const userData = ref()
+const userData = ref({ name: '', cash: 0, wallet: 0 })
 
 const handleLogout = () => {
   logout()
@@ -30,9 +30,6 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="d-flex justify-center userTitle">
-        <h2 v-if="userData">¡Hola, {{ userData.name }}!</h2>
-    </div>
     <div class="btn-container">
       <v-dialog max-width="300">
         <template v-slot:activator="{ props: activatorProps }">
@@ -85,15 +82,35 @@ onMounted(async () => {
         </template>
       </v-dialog>
     </div>
+    <div class="user-container">
+        <div class="user-title">
+            <h2 v-if="userData">¡Hola, {{ userData.name }}!</h2>
+        </div>
+        <div class="user-info">
+            <p>Efectivo: {{ userData.cash }} € | Cartera: {{ userData.wallet }} €</p>
+        </div>
+    </div>
 </template>
 
 <style scoped>
-    .userTitle {
-      padding: 50px;
+    .user-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 50px;
+    }
+
+    .user-title {
+        padding-bottom: 20px;
+    }
+
+    .user-info {
+        
     }
 
     .userOptions {
       margin: 0 20px;
+      margin-top: 50px
     }
 
     .btn-container {

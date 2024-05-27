@@ -5,7 +5,6 @@ export interface Transaction {
     concept: string
     amount: number
     date: Date
-    Charge: number
+    charge: number
     payment_Method?: string
-    
   }
