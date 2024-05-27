@@ -9,8 +9,6 @@
     const storedEmail = localStorage.getItem('email')
     const userData = ref(null)
 
-
-
     onMounted(async () => {
         if (token && storedEmail) {
             try {
@@ -81,6 +79,7 @@
         text-align: center;
         padding-top: 10px;
         border: 1px solid gray;
+        max-height: 500px;
     }
   
     .v-table > .v-table__wrapper > table > tbody > tr > th, 

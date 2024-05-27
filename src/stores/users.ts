@@ -26,6 +26,5 @@ export const useUsersStore = defineStore('users', () => {
     }
 }
 
-
 return { users, GetAllUsers }
 })

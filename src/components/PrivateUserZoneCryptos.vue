@@ -64,6 +64,7 @@
         padding-top: 10px;
         border: 1px solid gray;
         margin-bottom: 50px;
+        max-height: 500px;
     }
   
     .v-table > .v-table__wrapper > table > tbody > tr > th, 

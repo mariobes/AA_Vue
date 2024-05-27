@@ -37,6 +37,34 @@ export async function login(email: string, password: string) {
     }
 }
 
+export async function Register(name: string, birthdate: Date, email: string, password: string, phone: number, dni: string, nationality: string) {
+    try {
+        const response = await fetch('http://localhost:4746/Auth/Register', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+               name,
+               birthdate,
+               email,
+               password,
+               phone,
+               dni,
+               nationality
+            })
+          })
+          if (response.ok) {
+            return true
+          } else {
+            console.error('Error al registrar el usuario. Respuesta no exitosa.')
+            return false
+          }
+    } catch (error) {
+        console.error('Error al registrar el usuario: ', error)
+    }
+  }
+
 export function setToken(token: string | null) {
     state.token = token
     if (token) {
@@ -88,6 +116,7 @@ export function useAuth() {
   return {
     ...toRefs(state),
     login,
+    Register,
     setToken,
     getToken,
     setRole,

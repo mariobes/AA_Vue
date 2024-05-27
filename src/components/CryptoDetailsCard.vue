@@ -3,21 +3,25 @@
     import { useRoute } from 'vue-router'
     import type { Crypto } from '@/core/crypto'
     import { useCryptosStore } from '@/stores/cryptos'
-    import { useAuth } from '@/stores/auth'
+    import { getToken, useAuth, getUserData } from '@/stores/auth'
+    import { useTransactionsStore } from '@/stores/transactions'
 
+    const token = getToken()
     const { role } = useAuth()
 
-    const store = useCryptosStore()
+    const storeCryptos = useCryptosStore()
+    const storeTransactions = useTransactionsStore()
+
     const route = useRoute()
     const crypto = ref<Crypto | null>(null)
 
     const loadCrypto = () => {
         const cryptoId = parseInt(route.params.id as string)
-        crypto.value = store.cryptos.find(c => c.id === cryptoId) || null
+        crypto.value = storeCryptos.cryptos.find(c => c.id === cryptoId) || null
 
         if (!crypto.value) {
           const cryptoName = route.params.name as string
-          crypto.value = store.cryptos.find(c => c.name.toLowerCase() === cryptoName.toLowerCase()) || null
+          crypto.value = storeCryptos.cryptos.find(c => c.name.toLowerCase() === cryptoName.toLowerCase()) || null
         }
     }
 
@@ -28,6 +32,39 @@
     watch(route, () => {
         loadCrypto()
     })
+
+
+
+
+
+    const storedEmail = localStorage.getItem('email')
+
+const userData = ref({})
+const amount = ref<number>(0)
+  const dialog = ref(false) 
+
+const handleBuy = async (cryptoId) => {
+  const success = await storeTransactions.BuyCrypto(userData.value.id, cryptoId, amount.value, token)
+  if (success) {
+    userData.value.cash -= parseFloat(amount.value.toString()) 
+    userData.value.wallet += parseFloat(amount.value.toString()) 
+    amount.value = 0
+    console.log('Compra realizada con éxito')
+    dialog.value = false 
+  } else {
+    console.error('Error al comprar la criptomoneda')
+  }
+}
+
+onMounted(async () => {
+  try {
+    if (storedEmail) {
+      userData.value = await getUserData(storedEmail)
+    }
+  } catch (error) {
+    console.error('Error al obtener los datos del usuario: ', error)
+  }
+})
 </script>
 
 <template>
@@ -67,14 +104,14 @@
                       </v-card-title>                      
                       <v-card-text>
                         <v-text-field
-                          v-model="cryptoName"
+                          v-model="amount"
                           label="EUROS"
                           type="number"
                         ></v-text-field>
                       </v-card-text>
                       <v-card-actions>
                         <v-btn
-                          @click="handleBuy"
+                          @click="handleBuy(crypto.id)"
                         >
                           Comprar
                         </v-btn>
