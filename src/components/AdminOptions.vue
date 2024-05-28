@@ -18,8 +18,6 @@ const listUsers = () => {
 }
 </script>
 
-
-
 <template>
     <div class="d-flex justify-center adminTitle">
       <h2>Modo Administrador</h2>
@@ -29,8 +27,6 @@ const listUsers = () => {
       <v-btn color="red" @click="handleLogout" v-if="isLoggedIn">Cerrar sesión</v-btn>
     </div>
 </template>
-
-
 
 <style scoped>
     .adminTitle {

@@ -6,8 +6,6 @@ export const useTransactionsStore = defineStore('transactions', () => {
   const transactions = ref<Transaction[]>([])
   const cryptos = ref<Record<string, number>>({})
 
-
-
   async function GetTransactions(userId: number, token: string | null) {
     try {
         const response = await fetch(`http://localhost:4746/Transactions/${userId}`, {

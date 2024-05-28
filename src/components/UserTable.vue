@@ -55,8 +55,9 @@
       </thead>
       <tbody>
         <tr
-          v-for="user in store.users"
+          v-for="user, index in store.users"
           :key="user.id"
+          :class="{ 'background-gray': index % 2 === 1 }"
         >
           <td>{{ user.name }}</td>
           <td>{{ user.birthdate }}</td>
@@ -64,8 +65,8 @@
           <td>{{ user.phone }}</td>
           <td>{{ user.dni }}</td>
           <td>{{ user.nationality }}</td>
-          <td>{{ user.cash }}</td>
-          <td>{{ user.wallet }}</td>
+          <td>{{ user.cash }} €</td>
+          <td>{{ user.wallet }} €</td>
           <td>{{ user.role }}</td>
           <td>
             <v-btn @click="deleteUser(user.id)">Eliminar</v-btn></td>
@@ -83,7 +84,7 @@
   }
 
   .v-table {
-      width: 80%;
+      width: 85%;
       text-align: center;
   }
 
@@ -101,4 +102,7 @@
       border: 1px solid #ff0000;
   }
 
+  .background-gray {
+    background-color: #ddd
+  }
 </style>

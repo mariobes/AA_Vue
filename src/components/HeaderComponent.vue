@@ -10,7 +10,6 @@ const searchCrypto = () => {
     router.push({ name: 'cryptoDetailsByName', params: { name: searchQuery.value.trim() } })
   }
 }
-
 </script>
 
 <template>

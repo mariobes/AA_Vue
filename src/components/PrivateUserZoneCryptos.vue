@@ -39,8 +39,9 @@
         </thead>
         <tbody>
           <tr
-            v-for="(amount, cryptoName) in store.cryptos"
+            v-for="cryptoName, amount, index in store.cryptos"
             :key="cryptoName"
+            :class="{ 'background-gray': index % 2 === 1 }"
           >
             <td>{{ cryptoName }}</td>
             <td>{{ amount }}</td>
@@ -74,5 +75,9 @@
 
     .table-title {
         padding-bottom: 30px;
+    }
+
+    .background-gray {
+      background-color: #ddd
     }
   </style>

@@ -5,7 +5,8 @@ import { login, Register, getUserData } from '@/stores/auth'
 
 const emailLogin = ref('')
 const passwordLogin = ref('')
-const errorMessage = ref('')
+const errorMessageLogin = ref('')
+const errorMessageRegister = ref('')
 
 const name = ref('')
 const birthdate = ref<Date>(new Date())
@@ -29,13 +30,13 @@ onMounted(() => {
 
 const handleLogin = async () => {
     try {
-        errorMessage.value = ''
+        errorMessageLogin.value = ''
         const loggedIn = await login(emailLogin.value, passwordLogin.value)
         if (loggedIn) {
             const userData = await getUserData(emailLogin.value)
             router.push({ name: userData.role === 'admin' ? 'home' :'privateZoneUser', params: { id: userData.id } })
         } else {
-            errorMessage.value = 'Error. Las credenciales son incorrectas'
+            errorMessageLogin.value = 'Error. Las credenciales son incorrectas'
         }
     } catch (error) {
         console.error('Se ha producido un error al iniciar sesión: ', error)
@@ -45,6 +46,7 @@ const handleLogin = async () => {
 
 const handleRegister = async () => {
     try {
+        errorMessageRegister.value = ''
         const registered = await Register('ggggg', new Date('2001-01-01'), 'a@gmail.comm', 'stringst', '234', 'string', 'string')
         //const registered = await Register(name.value, new Date('2001-01-01'), email.value, password.value, phone.value, dni.value, nationality.value)
         console.log(name.value);
@@ -60,6 +62,8 @@ const handleRegister = async () => {
             //await login(email.value, password.value)
             //const userData = await getUserData(email.value)
             router.push({ name: 'privateZoneUser', params: { id: userData.id } })
+        } else {
+            errorMessageRegister.value = 'Error. Alguno de los parámetros es incorrecto o el email introducido ya se encuentra registrado.'
         }
     } catch (error) {
         console.error('Se ha producido un error al registrar el usuario: ', error)
@@ -69,7 +73,6 @@ const handleRegister = async () => {
 </script>
 
 <template>
-
     <v-tabs
         v-model="activeTab"
         fixed-tabs
@@ -96,7 +99,7 @@ const handleRegister = async () => {
         ></v-text-field>
 
         <v-btn class="mt-2 btn-login" type="submit" block>Iniciar Sesión</v-btn>
-        <v-alert v-if="errorMessage" type="error" class="mt-2">{{ errorMessage }}</v-alert>
+        <v-alert v-if="errorMessageLogin" type="error" class="mt-2">{{ errorMessageLogin }}</v-alert>
         </v-form>
     </v-sheet>
 
@@ -147,6 +150,7 @@ const handleRegister = async () => {
         ></v-text-field>
 
         <v-btn class="mt-2 btn-login" type="submit" block>Registrarse</v-btn>
+        <v-alert v-if="errorMessageRegister" type="error" class="mt-2">{{ errorMessageRegister }}</v-alert>
         </v-form>
     </v-sheet>
 </template>
@@ -160,5 +164,9 @@ const handleRegister = async () => {
     .tab {
         margin: 60px 0;
         background-color: white;
+    }
+
+    .v-alert {
+        margin-bottom: 30px;
     }
 </style>

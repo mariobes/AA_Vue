@@ -7,7 +7,7 @@
     const token = getToken()
 
     const storedEmail = localStorage.getItem('email')
-    const userData = ref(null)
+    const userData = ref<{ id?: number } | null>(null);
 
     onMounted(async () => {
         if (token && storedEmail) {
@@ -51,8 +51,9 @@
         </thead>
         <tbody>
           <tr
-            v-for="transaction in store.transactions"
+            v-for="transaction, index in store.transactions"
             :key="transaction.id"
+            :class="{ 'background-gray': index % 2 === 1 }"
           >
             <td>{{ transaction.userId }}</td>
             <td>{{ transaction.cryptoId ?? '---' }}</td>
@@ -89,5 +90,9 @@
 
     .table-title {
         padding-bottom: 30px;
+    }
+
+    .background-gray {
+      background-color: #ddd
     }
   </style>

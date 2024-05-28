@@ -109,7 +109,7 @@ onMounted(async () => {
           <h2 v-if="userData">¡Hola, {{ userData.name }}!</h2>
       </div>
       <div class="user-info">
-          <p>Efectivo: {{ userData.cash }} € | Cartera: {{ userData.wallet }} €</p>
+          <p>Efectivo: <b>{{ userData.cash }} €</b> | Cartera: <b>{{ userData.wallet }} €</b></p>
       </div>
   </div>
 </template>
@@ -123,11 +123,12 @@ onMounted(async () => {
 }
 
 .user-title {
-  padding-bottom: 20px;
+  padding-bottom: 30px;
+  font-size: 25px;
 }
 
 .user-info {
-  
+  font-size: 20px;
 }
 
 .userOptions {
@@ -144,6 +145,7 @@ onMounted(async () => {
   display: flex;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 30px;
   color: #52a7f7;
   font-weight: bold;
   border: 1px solid #52a7f7;

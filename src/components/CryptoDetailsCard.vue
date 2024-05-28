@@ -33,38 +33,34 @@
         loadCrypto()
     })
 
-
-
-
-
     const storedEmail = localStorage.getItem('email')
 
-const userData = ref({})
-const amount = ref<number>(0)
-  const dialog = ref(false) 
+    const userData = ref({})
+    const amount = ref<number>(0)
+    const dialog = ref(false) 
 
-const handleBuy = async (cryptoId) => {
-  const success = await storeTransactions.BuyCrypto(userData.value.id, cryptoId, amount.value, token)
-  if (success) {
-    userData.value.cash -= parseFloat(amount.value.toString()) 
-    userData.value.wallet += parseFloat(amount.value.toString()) 
-    amount.value = 0
-    console.log('Compra realizada con éxito')
-    dialog.value = false 
-  } else {
-    console.error('Error al comprar la criptomoneda')
-  }
-}
-
-onMounted(async () => {
-  try {
-    if (storedEmail) {
-      userData.value = await getUserData(storedEmail)
+    const handleBuy = async (cryptoId: number) => {
+      const success = await storeTransactions.BuyCrypto(userData.value.id, cryptoId, amount.value, token)
+      if (success) {
+        userData.value.cash -= parseFloat(amount.value.toString()) 
+        userData.value.wallet += parseFloat(amount.value.toString()) 
+        amount.value = 0
+        console.log('Compra realizada con éxito')
+        dialog.value = false 
+      } else {
+        console.error('Error al comprar la criptomoneda')
+      }
     }
-  } catch (error) {
-    console.error('Error al obtener los datos del usuario: ', error)
-  }
-})
+
+    onMounted(async () => {
+      try {
+        if (storedEmail) {
+          userData.value = await getUserData(storedEmail)
+        }
+      } catch (error) {
+        console.error('Error al obtener los datos del usuario: ', error)
+      }
+    })
 </script>
 
 <template>
@@ -111,6 +107,7 @@ onMounted(async () => {
                       </v-card-text>
                       <v-card-actions>
                         <v-btn
+                          class="buy-btn"
                           @click="handleBuy(crypto.id)"
                         >
                           Comprar
@@ -144,6 +141,11 @@ onMounted(async () => {
       color: #52a7f7;
       font-weight: bold;
       border: 1px solid #52a7f7;
+  }
+
+  .buy-btn {
+    margin-bottom: 30px;
+    margin-top: 0;
   }
 
   .card-btn {

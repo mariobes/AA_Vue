@@ -32,7 +32,6 @@ async function UpdateCrypto(id: number, updatedCrypto: UpdateCrypto, token: stri
     }
 }
     
-
   return { cryptos, GetAllCryptos, UpdateCrypto }
 })
 

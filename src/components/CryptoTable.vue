@@ -64,8 +64,9 @@ onMounted(async () => {
       </thead>
       <tbody>
         <tr
-          v-for="crypto in storeCryptos.cryptos"
+          v-for="crypto, index in storeCryptos.cryptos"
           :key="crypto.id"
+          :class="{ 'background-gray': index % 2 === 1 }"
         >
           <td>
             <h4>
@@ -108,6 +109,7 @@ onMounted(async () => {
                   </v-card-text>
                   <v-card-actions>
                     <v-btn
+                      class="buy-btn"
                       @click="handleBuy(crypto.id)"
                     >
                       Comprar
@@ -163,6 +165,10 @@ onMounted(async () => {
       border: 1px solid #52a7f7;
   }
 
+  .buy-btn {
+    margin-bottom: 30px;
+  }
+
   .card-btn {
     text-decoration: none;
   }
@@ -180,5 +186,9 @@ onMounted(async () => {
 
   .title-popup .v-btn {
     margin-left: 60px;
+  }
+
+  .background-gray {
+    background-color: #ddd
   }
 </style>
