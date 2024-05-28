@@ -67,7 +67,7 @@
     <v-container>
       <v-row justify="center" class="fill-height">
         <v-col cols="12" md="4">
-          <v-card v-if="crypto">
+          <v-card v-if="crypto" class="crypto-card">
             <v-card-title class="text-center">{{ crypto.name }}</v-card-title>
             <v-card-subtitle class="text-center">{{ crypto.symbol }}</v-card-subtitle>
             <v-card-text>{{ crypto.description }}</v-card-text>
@@ -128,7 +128,7 @@
         padding-top: 100px;
     }
 
-    .v-card {
+    .crypto-card {
         padding: 10px 0;
         max-width: 500px;
     }

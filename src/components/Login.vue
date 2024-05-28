@@ -79,7 +79,6 @@ const handleRegister = async () => {
         class="tab"
         >
         <v-tab text="Iniciar sesión"></v-tab>
-
         <v-tab text="Registrarse"></v-tab>
     </v-tabs>
 
