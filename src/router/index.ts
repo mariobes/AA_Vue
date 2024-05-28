@@ -12,12 +12,32 @@ const router = createRouter({
     {
       path: '/signIn',
       name: 'signIn',
-      component: () => import('../views/SignInView.vue')
+      component: () => import('../views/LoginView.vue')
     },
     {
-      path: '/cryptoDetails',
+      path: '/cryptoDetails/:id',
       name: 'cryptoDetails',
-      component: () => import('../views/CryptoDetails.vue')
+      component: () => import('../views/CryptoDetailsView.vue')
+    },
+    {
+      path: '/cryptoDetails/:name',
+      name: 'cryptoDetailsByName',
+      component: () => import('../views/CryptoDetailsView.vue')
+    },
+    {
+      path: '/privateZoneUser/:id',
+      name: 'privateZoneUser',
+      component: () => import('../views/PrivateUserZoneView.vue')
+    },
+    {
+      path: '/listUsers',
+      name: 'listUsers',
+      component: () => import('../views/ListUsersView.vue')
+    },
+    {
+      path: '/updateCrypto/:id',
+      name: 'updateCrypto',
+      component: () => import('../views/UpdateCryptoView.vue')
     }
   ]
 })

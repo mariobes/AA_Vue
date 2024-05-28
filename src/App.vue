@@ -1,23 +1,30 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
+import HeaderComponent from '@/components/HeaderComponent.vue'
+import FooterComponent from '@/components/FooterComponent.vue'
 
 </script>
 
 <template>
-  <header>
-    <div>
+  <v-app>
+      <header>
+        <HeaderComponent></HeaderComponent>
+      </header>
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/signIn">Sign In</RouterLink>
-        <RouterLink to="/cryptoDetails">Crypto Details</RouterLink>
-      </nav>
-    </div>
-  </header>
+      <main>
+        <RouterView />
+      </main>
 
-  <RouterView />
+      <footer>
+        <FooterComponent></FooterComponent>
+      </footer>
+  </v-app>
 </template>
 
 <style scoped>
-
+  main {
+    flex-grow: 1;
+  }
 </style>
+
+
