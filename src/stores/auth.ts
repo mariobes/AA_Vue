@@ -37,7 +37,7 @@ export async function login(email: string, password: string) {
     }
 }
 
-export async function Register(name: string, birthdate: Date, email: string, password: string, phone: number, dni: string, nationality: string) {
+export async function Register(name: string, birthdate: Date, email: string, password: string, phone: string, dni: string, nationality: string) {
     try {
         const response = await fetch('http://localhost:4746/Auth/Register', {
             method: 'POST',

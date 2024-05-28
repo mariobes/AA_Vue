@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { login, Register, getUserData } from '@/stores/auth'
 
@@ -8,10 +8,10 @@ const passwordLogin = ref('')
 const errorMessage = ref('')
 
 const name = ref('')
-const birthdate = ref<Date>(new Date());
+const birthdate = ref<Date>(new Date())
 const email = ref('')
 const password = ref('')
-const phone = ref<number>()
+const phone = ref('')
 const dni = ref('')
 const nationality = ref('')
 
@@ -45,12 +45,8 @@ const handleLogin = async () => {
 
 const handleRegister = async () => {
     try {
-        if (!birthdate.value) {
-            console.error('Fecha de nacimiento no válida')
-            return
-        }
-
-        const registered = await Register(name.value, birthdate.value, email.value, password.value, phone.value, dni.value, nationality.value)
+        const registered = await Register('ggggg', new Date('2001-01-01'), 'a@gmail.comm', 'stringst', '234', 'string', 'string')
+        //const registered = await Register(name.value, new Date('2001-01-01'), email.value, password.value, phone.value, dni.value, nationality.value)
         console.log(name.value);
         console.log(birthdate.value);
         console.log(email.value);
@@ -59,8 +55,10 @@ const handleRegister = async () => {
         console.log(dni.value);
         console.log(nationality.value);
         if (registered) {
-            await login(email.value, password.value)
-            const userData = await getUserData(emailLogin.value)
+            await login('a@gmail.comm', 'stringst')
+            const userData = await getUserData('a@gmail.comm')
+            //await login(email.value, password.value)
+            //const userData = await getUserData(email.value)
             router.push({ name: 'privateZoneUser', params: { id: userData.id } })
         }
     } catch (error) {

@@ -16,7 +16,7 @@ const userData = ref({})
 const amount = ref<number>(0)
 const dialog = ref(false) 
 
-const handleBuy = async (cryptoId) => {
+const handleBuy = async (cryptoId: number) => {
   const success = await storeTransactions.BuyCrypto(userData.value.id, cryptoId, amount.value, token)
   if (success) {
     userData.value.cash -= parseFloat(amount.value.toString()) 
