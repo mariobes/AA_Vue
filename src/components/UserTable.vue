@@ -1,15 +1,20 @@
 <script setup lang="ts">
     import { useUsersStore } from '@/stores/users'
     import { getToken } from '@/stores/auth'
+    import { useI18n } from 'vue-i18n'
 
     const store = useUsersStore()
     const token = getToken()
+
+    const { t } = useI18n()
+
     if (token) {
       store.GetAllUsers(token) 
     }
 
     const deleteUser = async (userId: number) => {
     const success = await store.DeleteUser(userId, token)
+
     if (success) {
       console.log('Usuario eliminado con éxito')
       store.GetAllUsers(token)
@@ -25,31 +30,31 @@
       <thead>
         <tr>
           <th>
-            <h2>Nombre</h2>
+            <h2>{{ t('Nombre') }}</h2>
           </th>
           <th>
-            <h2>Fecha de nacimiento</h2>
+            <h2>{{ t('FechaNacimiento') }}</h2>
           </th>
           <th>
-            <h2>Email</h2>
+            <h2>{{ t('Email') }}</h2>
           </th>
           <th>
-            <h2>Teléfono</h2>
+            <h2>{{ t('Telefono') }}</h2>
           </th>
           <th>
-            <h2>DNI</h2>
+            <h2>{{ t('DNI') }}</h2>
           </th>
           <th>
-            <h2>Nacionalidad</h2>
+            <h2>{{ t('Nacionalidad') }}</h2>
           </th>
           <th>
-            <h2>Efectivo</h2>
+            <h2>{{ t('Efectivo') }}</h2>
           </th>
           <th>
-            <h2>Cartera</h2>
+            <h2>{{ t('Cartera') }}</h2>
           </th>
           <th>
-            <h2>Rol</h2>
+            <h2>{{ t('Rol') }}</h2>
           </th>
         </tr>
       </thead>
@@ -69,7 +74,7 @@
           <td>{{ user.wallet }} €</td>
           <td>{{ user.role }}</td>
           <td>
-            <v-btn @click="deleteUser(user.id)">Eliminar</v-btn></td>
+            <v-btn @click="deleteUser(user.id)">{{ t('EliminarBtn') }}</v-btn></td>
         </tr>
       </tbody>
     </v-table>

@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 </script>
 
 <template>
-    <v-footer>© 2024 — CryptoApp, Desarrollo en Entorno Cliente</v-footer>
+    <v-footer>{{ t('Footer') }}</v-footer>
 </template>
 
 <style scoped>

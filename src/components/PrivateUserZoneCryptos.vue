@@ -2,12 +2,15 @@
     import { ref, onMounted } from 'vue'
     import { useTransactionsStore } from '@/stores/transactions'
     import { getToken, getUserData } from '@/stores/auth'
+    import { useI18n } from 'vue-i18n'
 
     const store = useTransactionsStore()
     const token = getToken()
 
     const storedEmail = localStorage.getItem('email')
     const userData = ref(null)
+
+    const { t } = useI18n()
 
     onMounted(async () => {
         if (token && storedEmail) {
@@ -25,15 +28,15 @@
 
 <template>
     <div class="table-container">
-      <h2 class="table-title">Mis Criptomonedas</h2>
+      <h2 class="table-title">{{ t('TituloCriptomonedas') }}</h2>
       <v-table>
         <thead>
           <tr>
             <th>
-              <h2>ID Cripto</h2>
+              <h2>{{ t('Nombre') }}</h2>
             </th>
             <th>
-              <h2>Cantidad</h2>
+              <h2>{{ t('Cantidad') }}</h2>
             </th>
           </tr>
         </thead>
@@ -43,8 +46,8 @@
             :key="cryptoName"
             :class="{ 'background-gray': index % 2 === 1 }"
           >
-            <td>{{ cryptoName }}</td>
             <td>{{ amount }}</td>
+            <td>{{ cryptoName }}</td>
           </tr>
         </tbody>
       </v-table>

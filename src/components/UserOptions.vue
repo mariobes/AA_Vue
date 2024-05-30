@@ -2,12 +2,15 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { logout, getToken, getUserData } from '@/stores/auth'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const isLoggedIn = !!getToken()
 
 const storedEmail = localStorage.getItem('email')
 const userData = ref()
+
+const { t } = useI18n()
 
 const handleLogout = () => {
   logout()
@@ -31,8 +34,8 @@ onMounted(async () => {
 
 <template>
     <div class="d-flex justify-center userOptions">
-      <v-btn color="primary" @click="myAccount">Mi cuenta</v-btn>
-      <v-btn color="red" @click="handleLogout" v-if="isLoggedIn">Cerrar sesión</v-btn>
+      <v-btn color="primary" @click="myAccount">{{ t('MiCuenta') }}</v-btn>
+      <v-btn color="red" @click="handleLogout" v-if="isLoggedIn">{{ t('CerrarSesionBtn') }}</v-btn>
     </div>
 </template>
 
