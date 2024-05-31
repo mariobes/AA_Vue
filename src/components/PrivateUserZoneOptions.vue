@@ -1,18 +1,20 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { logout, getToken, getUserData } from '@/stores/auth'
+import { logout, getToken, isLoggedIn, getUserData } from '@/stores/auth'
 import { useTransactionsStore } from '@/stores/transactions'
+import { useI18n } from 'vue-i18n'
 
 const token = getToken()
 
 const router = useRouter()
-const isLoggedIn = !!getToken()
 
 const storedEmail = localStorage.getItem('email')
 const userData = ref({ name: '', cash: 0, wallet: 0 })
 const amount = ref<number>(0)
 const dialog = ref(false) 
+
+const { t } = useI18n()
 
 const transactionsStore = useTransactionsStore()
 
@@ -20,6 +22,8 @@ const handleLogout = () => {
   logout()
   router.push('/')
 }
+
+const isLoggedInComputed = computed(() => isLoggedIn())
 
 const buyCrypto = () => {
   router.push('/')
@@ -58,7 +62,7 @@ onMounted(async () => {
         <v-btn
           v-bind="activatorProps"
           color="primary"
-          text="Ingresar dinero"
+          :text="t('IngresarDineroBtn')"
           variant="flat"
           class="userOptions"
         ></v-btn>
@@ -66,20 +70,20 @@ onMounted(async () => {
         class="userOptions" 
         color="primary" 
         @click="buyCrypto"
-        text="Comprar criptomoneda"
+        :text="t('ComprarCriptomonedaBtn')"
         ></v-btn>
         <v-btn 
           color="red" 
           @click="handleLogout" 
-          v-if="isLoggedIn"
-          text="Cerrar sesión"
+          v-if="isLoggedInComputed"
+          :text="t('CerrarSesionBtn')"
           class="userOptions"
           ></v-btn>
       </template>
       <template v-slot:default="{ isActive }">
         <v-card>
           <v-card-title>
-              <div class="title-popup">Ingresar dinero
+              <div class="title-popup">{{ t('IngresarDineroBtn') }}
               <v-btn class="close-btn" size="small" icon @click="isActive.value = false">
                 <v-icon color="grey lighten-1">mdi-close</v-icon>
               </v-btn>
@@ -97,7 +101,7 @@ onMounted(async () => {
               class="buy-btn"
               @click="makeDeposit"
             >
-              Ingresar
+            {{ t('IngresarBtn') }}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -106,10 +110,10 @@ onMounted(async () => {
   </div>
   <div class="user-container">
       <div class="user-title">
-          <h2 v-if="userData">¡Hola, {{ userData.name }}!</h2>
+          <h2 v-if="userData">¡{{ t('ZonaPrivadaTitulo') }}, {{ userData.name }}!</h2>
       </div>
       <div class="user-info">
-          <p>Efectivo: <b>{{ userData.cash }} €</b> | Cartera: <b>{{ userData.wallet }} €</b></p>
+          <p>{{ t('ZonaPrivadaEfectivo') }}: <b>{{ userData.cash }} {{ t('Moneda') }}</b> | {{ t('ZonaPrivadaCartera') }}: <b>{{ userData.wallet }} {{ t('Moneda') }}</b></p>
       </div>
   </div>
 </template>

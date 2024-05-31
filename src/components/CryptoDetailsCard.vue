@@ -5,6 +5,7 @@
     import { useCryptosStore } from '@/stores/cryptos'
     import { getToken, useAuth, getUserData } from '@/stores/auth'
     import { useTransactionsStore } from '@/stores/transactions'
+    import { useI18n } from 'vue-i18n'
 
     const token = getToken()
     const { role } = useAuth()
@@ -14,6 +15,8 @@
 
     const route = useRoute()
     const crypto = ref<Crypto | null>(null)
+
+    const { t } = useI18n()
 
     const loadCrypto = () => {
         const cryptoId = parseInt(route.params.id as string)
@@ -67,17 +70,17 @@
     <v-container>
       <v-row justify="center" class="fill-height">
         <v-col cols="12" md="4">
-          <v-card v-if="crypto">
+          <v-card v-if="crypto" class="crypto-card">
             <v-card-title class="text-center">{{ crypto.name }}</v-card-title>
             <v-card-subtitle class="text-center">{{ crypto.symbol }}</v-card-subtitle>
             <v-card-text>{{ crypto.description }}</v-card-text>
-            <v-card-subtitle>Desarrollador: {{ crypto.developer }}</v-card-subtitle>
-            <v-card-subtitle>Valor: {{ crypto.value }} €</v-card-subtitle>
-            <v-card-subtitle>Fecha de Registro: {{ new Date(crypto.registerDate).toLocaleDateString() }}</v-card-subtitle>
-            <v-card-subtitle>Descentralizada: {{ crypto.descentralized ? 'Sí' : 'No' }}</v-card-subtitle>
+            <v-card-subtitle>{{ t('DesarrolladorCripto') }}: {{ crypto.developer }}</v-card-subtitle>
+            <v-card-subtitle>{{ t('ValorCripto') }}: {{ crypto.value }} €</v-card-subtitle>
+            <v-card-subtitle>{{ t('FechaRegistroCripto') }}: {{ new Date(crypto.registerDate).toLocaleDateString() }}</v-card-subtitle>
+            <v-card-subtitle>{{ t('DescentralizadaCripto') }}: {{ crypto.descentralized ? 'Sí' : 'No' }}</v-card-subtitle>
             <div v-if="role === 'admin'">
               <RouterLink :to="{ path: `/updateCrypto/${crypto.id}` }" class="card-btn">
-                <v-btn>Editar</v-btn>
+                <v-btn>{{ t('EditarBtn') }}</v-btn>
               </RouterLink>
             </div>
             <div v-if="role === 'user'">
@@ -110,7 +113,7 @@
                           class="buy-btn"
                           @click="handleBuy(crypto.id)"
                         >
-                          Comprar
+                        {{ t('ComprarBtn') }}
                         </v-btn>
                       </v-card-actions>
                     </v-card>
@@ -128,7 +131,7 @@
         padding-top: 100px;
     }
 
-    .v-card {
+    .crypto-card {
         padding: 10px 0;
         max-width: 500px;
     }

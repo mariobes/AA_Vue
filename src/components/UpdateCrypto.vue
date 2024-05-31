@@ -5,6 +5,7 @@
     import { useCryptosStore } from '@/stores/cryptos'
     import router from '@/router';
     import { getToken } from '@/stores/auth'
+    import { useI18n } from 'vue-i18n'
 
     const token = getToken()
 
@@ -20,6 +21,8 @@
     const descentralized = ref<boolean | null>(null)
     
     const valid = ref(false)
+
+    const { t } = useI18n()
 
     const loadCrypto = () => {
         const cryptoId = parseInt(route.params.id as string)
@@ -73,7 +76,7 @@
         >
           <v-text-field
             v-model="name"
-            label="Nombre"
+            :label="t('NombreCripto')"
             required
           ></v-text-field>
         </v-col>
@@ -84,7 +87,7 @@
         >
           <v-text-field
             v-model="symbol"
-            label="Símbolo"
+            :label="t('SimboloCripto')"
             required
           ></v-text-field>
         </v-col>
@@ -95,7 +98,7 @@
         >
           <v-text-field
             v-model="value"
-            label="Valor"
+            :label="t('ValorCripto')"
             type="number"
             required
           ></v-text-field>
@@ -107,7 +110,7 @@
         >
           <v-text-field
             v-model="developer"
-            label="Desarrollador"
+            :label="t('DesarrolladorCripto')"
             required
           ></v-text-field>
         </v-col>
@@ -117,7 +120,7 @@
         >
           <v-text-field
             v-model="description"
-            label="Descripción"
+            :label="t('DescripcionCripto')"
             required
           ></v-text-field>
         </v-col>
@@ -128,10 +131,10 @@
         >
         <v-checkbox
             v-model="descentralized"
-            label="¿Es descentralizada?"
+            :label="t('DescentralizadaCriptoPregunta')"
             required
           ></v-checkbox>
-          <v-btn class="mt-2" type="submit">Editar</v-btn>
+          <v-btn class="mt-2" type="submit">{{ t('EditarBtn') }}</v-btn>
         </v-col>
       </v-row>
     </v-container>

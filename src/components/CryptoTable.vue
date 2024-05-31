@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useCryptosStore } from '@/stores/cryptos'
 import { useTransactionsStore } from '@/stores/transactions'
 import { getToken, useAuth, getUserData } from '@/stores/auth'
+import { useI18n } from 'vue-i18n'
 
 const token = getToken()
 const { role } = useAuth()
@@ -15,6 +16,8 @@ const storedEmail = localStorage.getItem('email')
 const userData = ref({})
 const amount = ref<number>(0)
 const dialog = ref(false) 
+
+const { t } = useI18n()
 
 const handleBuy = async (cryptoId: number) => {
   const success = await storeTransactions.BuyCrypto(userData.value.id, cryptoId, amount.value, token)
@@ -46,19 +49,19 @@ onMounted(async () => {
       <thead>
         <tr>
           <th>
-            <h2>Nombre</h2>
+            <h2>{{ t('NombreCripto') }}</h2>
           </th>
           <th>
-            <h2>Símbolo</h2>
+            <h2>{{ t('SimboloCripto') }}</h2>
           </th>
           <th>
-            <h2>Valor</h2>
+            <h2>{{ t('ValorCripto') }}</h2>
           </th>
           <th>
-            <h2>Desarrollador</h2>
+            <h2>{{ t('DesarrolladorCripto') }}</h2>
           </th>
           <th class="narrow-column">
-            <h2>Descentralizada</h2>
+            <h2>{{ t('DescentralizadaCripto') }}</h2>
           </th>
         </tr>
       </thead>
@@ -74,12 +77,12 @@ onMounted(async () => {
             </h4>
           </td>
           <td>{{ crypto.symbol }}</td>
-          <td>{{ crypto.value }} €</td>
+          <td>{{ crypto.value }} {{ t('Moneda') }}</td>
           <td>{{ crypto.developer }}</td>
           <td>{{ crypto.descentralized ? 'Sí' : 'No' }}</td>
           <td v-if="role === 'admin'">
             <RouterLink :to="{ path: `/updateCrypto/${crypto.id}` }" class="card-btn">
-              <v-btn>Editar</v-btn>
+              <v-btn>{{ t('EditarBtn') }}</v-btn>
             </RouterLink>
           </td>
           <td v-if="role === 'user'">
@@ -87,14 +90,14 @@ onMounted(async () => {
               <template v-slot:activator="{ props: activatorProps }">
                 <v-btn
                   v-bind="activatorProps"
-                  text="Comprar"
+                  :text="t('ComprarBtn')"
                   variant="flat"
                 ></v-btn>
               </template>
               <template v-slot:default="{ isActive }">
                 <v-card>
                   <v-card-title>
-                      <div class="title-popup">Comprar {{ crypto.name }}
+                      <div class="title-popup">{{ t('ComprarBtn') }} {{ crypto.name }}
                       <v-btn class="close-btn" size="small" icon @click="isActive.value = false">
                         <v-icon color="grey lighten-1">mdi-close</v-icon>
                       </v-btn>
@@ -112,7 +115,7 @@ onMounted(async () => {
                       class="buy-btn"
                       @click="handleBuy(crypto.id)"
                     >
-                      Comprar
+                    {{ t('ComprarBtn') }}
                     </v-btn>
                   </v-card-actions>
                 </v-card>

@@ -1,30 +1,32 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { logout, getToken } from '@/stores/auth'
+import { logout, isLoggedIn  } from '@/stores/auth'
+import { useI18n } from 'vue-i18n'
+import { computed } from 'vue';
 
 const router = useRouter()
-const isLoggedIn = ref(!!getToken())
+
+const { t } = useI18n()
 
 const handleLogout = () => {
   logout()
-  isLoggedIn.value = false
   router.push('/')
 }
 
+const isLoggedInComputed = computed(() => isLoggedIn())
+
 const listUsers = () => {
-  isLoggedIn.value = false
   router.push('/listUsers')
 }
 </script>
 
 <template>
     <div class="d-flex justify-center adminTitle">
-      <h2>Modo Administrador</h2>
+      <h2>{{ t('TituloAdministrador') }}</h2>
     </div>
     <div class="d-flex justify-center adminOptions">
-      <v-btn color="primary" @click="listUsers">Lista de usuarios</v-btn>
-      <v-btn color="red" @click="handleLogout" v-if="isLoggedIn">Cerrar sesión</v-btn>
+      <v-btn color="primary" @click="listUsers">{{ t('ListaUsuariosBtn') }}</v-btn>
+      <v-btn color="red" @click="handleLogout" v-if="isLoggedInComputed">{{ t('CerrarSesionBtn') }}</v-btn>
     </div>
 </template>
 

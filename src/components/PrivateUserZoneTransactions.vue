@@ -2,12 +2,15 @@
     import { ref, onMounted } from 'vue'
     import { useTransactionsStore } from '@/stores/transactions'
     import { getToken, getUserData } from '@/stores/auth'
+    import { useI18n } from 'vue-i18n'
 
     const store = useTransactionsStore()
     const token = getToken()
 
     const storedEmail = localStorage.getItem('email')
     const userData = ref<{ id?: number } | null>(null);
+
+    const { t } = useI18n()
 
     onMounted(async () => {
         if (token && storedEmail) {
@@ -25,27 +28,27 @@
 
 <template>
     <div class="table-container">
-      <h2 class="table-title">Mis Transacciones</h2>
+      <h2 class="table-title">{{ t('TituloTransacciones') }}</h2>
       <v-table>
         <thead>
           <tr>
             <th>
-              <h2>ID Usuario</h2>
+              <h2>{{ t('IDTransaccion') }}</h2>
             </th>
             <th>
-              <h2>ID Cripto</h2>
+              <h2>{{ t('IDCripto') }}</h2>
             </th>
             <th>
-              <h2>Concepto</h2>
+              <h2>{{ t('Concepto') }}</h2>
             </th>
             <th>
-              <h2>Cantidad</h2>
+              <h2>{{ t('Cantidad') }}</h2>
             </th>
             <th>
-              <h2>Fecha de compra</h2>
+              <h2>{{ t('FechaCompra') }}</h2>
             </th>
             <th>
-              <h2>Método de pago</h2>
+              <h2>{{ t('MetodoPago') }}</h2>
             </th>
           </tr>
         </thead>
@@ -55,7 +58,7 @@
             :key="transaction.id"
             :class="{ 'background-gray': index % 2 === 1 }"
           >
-            <td>{{ transaction.userId }}</td>
+            <td>{{ transaction.id }}</td>
             <td>{{ transaction.cryptoId ?? '---' }}</td>
             <td>{{ transaction.concept }}</td>
             <td>{{ transaction.amount }}</td>

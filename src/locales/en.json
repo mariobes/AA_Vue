@@ -1,0 +1,51 @@
+{
+    "NombreCripto": "Name",
+    "SimboloCripto": "Symbol",
+    "ValorCripto": "Value",
+    "Moneda": "€",
+    "DesarrolladorCripto": "Developer",
+    "DescripcionCripto": "Description",
+    "FechaRegistroCripto": "Registration Date",
+    "DescentralizadaCripto": "Decentralized",
+    "DescentralizadaCriptoPregunta": "Is it decentralized?",
+    
+    "BuscadorCripto": "Search cryptocurrency",
+
+    "Footer": "© 2024 — CryptoApp",
+
+    "IniciarSesion": "Log In",
+    "Registrarse": "Sign Up", 
+    "Email" : "Email",
+    "Contraseña" : "Password",
+    "Nombre" : "Name",
+    "FechaNacimiento" : "Date of Birth",
+    "Telefono" : "Phone",
+    "DNI" : "ID",
+    "Nacionalidad" : "Nationality",
+    "Rol" : "Role",
+
+    "TituloAdministrador": "Admin Mode",
+    "CerrarSesionBtn": "Log Out",
+    "ListaUsuariosBtn": "User List",
+    "MiCuenta": "My Account",
+    "IngresarDineroBtn": "Deposit Money",
+    "IngresarBtn": "Deposit",
+    "ComprarCriptomonedaBtn": "Buy Cryptocurrency",
+
+    "ZonaPrivadaTitulo": "Hello",
+    "ZonaPrivadaEfectivo": "Cash",
+    "ZonaPrivadaCartera": "Wallet",
+
+    "TituloCriptomonedas": "My Cryptocurrencies",
+    "TituloTransacciones": "My Transactions",
+    "IDTransaccion": "Transaction ID",
+    "IDCripto": "Crypto ID",
+    "Concepto": "Concept",
+    "Cantidad": "Amount",
+    "FechaCompra": "Purchase Date",
+    "MetodoPago": "Payment Method",
+
+    "ComprarBtn": "Buy",
+    "EditarBtn": "Edit",
+    "EliminarBtn": "Delete"
+}
