@@ -2,7 +2,7 @@
     "NombreCripto": "Name",
     "SimboloCripto": "Symbol",
     "ValorCripto": "Value",
-    "Moneda": "€",
+    "Moneda": "$",
     "DesarrolladorCripto": "Developer",
     "DescripcionCripto": "Description",
     "FechaRegistroCripto": "Registration Date",

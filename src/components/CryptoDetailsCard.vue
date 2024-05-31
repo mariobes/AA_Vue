@@ -88,14 +88,13 @@
                   <template v-slot:activator="{ props: activatorProps }">
                     <v-btn
                       v-bind="activatorProps"
-                      text="Comprar"
                       variant="flat"
-                    ></v-btn>
+                    >{{ t('ComprarBtn') }}</v-btn>
                   </template>
                   <template v-slot:default="{ isActive }">
                     <v-card>
                       <v-card-title>
-                          <div class="title-popup">Comprar {{ crypto.name }}
+                          <div class="title-popup">{{ t('ComprarBtn') }} {{ crypto.name }}
                           <v-btn class="close-btn" size="small" icon @click="isActive.value = false">
                             <v-icon color="grey lighten-1">mdi-close</v-icon>
                           </v-btn>
