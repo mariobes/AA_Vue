@@ -38,7 +38,7 @@
 
     "TituloCriptomonedas": "My Cryptocurrencies",
     "TituloTransacciones": "My Transactions",
-    "IDUsuario": "User ID",
+    "IDTransaccion": "Transaction ID",
     "IDCripto": "Crypto ID",
     "Concepto": "Concept",
     "Cantidad": "Amount",

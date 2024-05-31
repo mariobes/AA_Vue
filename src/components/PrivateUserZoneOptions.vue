@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { logout, getToken, getUserData } from '@/stores/auth'
+import { logout, getToken, isLoggedIn, getUserData } from '@/stores/auth'
 import { useTransactionsStore } from '@/stores/transactions'
 import { useI18n } from 'vue-i18n'
 
 const token = getToken()
 
 const router = useRouter()
-const isLoggedIn = !!getToken()
 
 const storedEmail = localStorage.getItem('email')
 const userData = ref({ name: '', cash: 0, wallet: 0 })
@@ -23,6 +22,8 @@ const handleLogout = () => {
   logout()
   router.push('/')
 }
+
+const isLoggedInComputed = computed(() => isLoggedIn())
 
 const buyCrypto = () => {
   router.push('/')
@@ -74,7 +75,7 @@ onMounted(async () => {
         <v-btn 
           color="red" 
           @click="handleLogout" 
-          v-if="isLoggedIn"
+          v-if="isLoggedInComputed"
           :text="t('CerrarSesionBtn')"
           class="userOptions"
           ></v-btn>

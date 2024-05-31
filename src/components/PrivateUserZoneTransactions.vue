@@ -33,7 +33,7 @@
         <thead>
           <tr>
             <th>
-              <h2>{{ t('IDUsuario') }}</h2>
+              <h2>{{ t('IDTransaccion') }}</h2>
             </th>
             <th>
               <h2>{{ t('IDCripto') }}</h2>
@@ -58,7 +58,7 @@
             :key="transaction.id"
             :class="{ 'background-gray': index % 2 === 1 }"
           >
-            <td>{{ transaction.userId }}</td>
+            <td>{{ transaction.id }}</td>
             <td>{{ transaction.cryptoId ?? '---' }}</td>
             <td>{{ transaction.concept }}</td>
             <td>{{ transaction.amount }}</td>

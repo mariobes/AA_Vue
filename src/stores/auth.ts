@@ -112,6 +112,10 @@ export function logout() {
     setRole(null)
 }
 
+export function isLoggedIn() {
+    return !!state.token;
+}
+
 export function useAuth() {
   return {
     ...toRefs(state),
@@ -122,6 +126,7 @@ export function useAuth() {
     setRole,
     getRole,
     getUserData,
-    logout
+    logout,
+    isLoggedIn
   }
 }

@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { logout, getToken, getUserData } from '@/stores/auth'
+import { logout, isLoggedIn, getUserData } from '@/stores/auth'
 import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
-const isLoggedIn = !!getToken()
 
 const storedEmail = localStorage.getItem('email')
 const userData = ref()
@@ -16,6 +15,8 @@ const handleLogout = () => {
   logout()
   router.push('/')
 }
+
+const isLoggedInComputed = computed(() => isLoggedIn())
 
 const myAccount = () => {
     router.push(`/privateZoneUser/${userData.value.id}`)
@@ -35,7 +36,7 @@ onMounted(async () => {
 <template>
     <div class="d-flex justify-center userOptions">
       <v-btn color="primary" @click="myAccount">{{ t('MiCuenta') }}</v-btn>
-      <v-btn color="red" @click="handleLogout" v-if="isLoggedIn">{{ t('CerrarSesionBtn') }}</v-btn>
+      <v-btn color="red" @click="handleLogout" v-if="isLoggedInComputed">{{ t('CerrarSesionBtn') }}</v-btn>
     </div>
 </template>
 
