@@ -3,6 +3,7 @@
     "SimboloCripto": "Symbol",
     "ValorCripto": "Value",
     "Moneda": "$",
+    "TextoMoneda": "DOLAR",
     "DesarrolladorCripto": "Developer",
     "DescripcionCripto": "Description",
     "FechaRegistroCripto": "Registration Date",
@@ -26,6 +27,7 @@
 
     "TituloAdministrador": "Admin Mode",
     "CerrarSesionBtn": "Log Out",
+    "RegistrarCriptoBtn": "Register cryptocurrency",
     "ListaUsuariosBtn": "User List",
     "MiCuenta": "My Account",
     "IngresarDineroBtn": "Deposit Money",
@@ -47,5 +49,9 @@
 
     "ComprarBtn": "Buy",
     "EditarBtn": "Edit",
-    "EliminarBtn": "Delete"
+    "EliminarBtn": "Delete",
+    "RegistrarBtn": "Register",
+
+    "TituloRegistrarCripto": "Register new cryptocurrency",
+    "TextoOrdenar": "Sort by Value or Name"
 }

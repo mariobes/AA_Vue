@@ -12,7 +12,7 @@ const state: AuthState = reactive({
 
 export async function login(email: string, password: string) {
     try {
-        const response = await fetch('http://localhost:4746/Auth/Login', {
+        const response = await fetch('http://localhost:4746/Auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -39,7 +39,7 @@ export async function login(email: string, password: string) {
 
 export async function Register(name: string, birthdate: Date, email: string, password: string, phone: string, dni: string, nationality: string) {
     try {
-        const response = await fetch('http://localhost:4746/Auth/Register', {
+        const response = await fetch('http://localhost:4746/Auth/register', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -63,7 +63,7 @@ export async function Register(name: string, birthdate: Date, email: string, pas
     } catch (error) {
         console.error('Error al registrar el usuario: ', error)
     }
-  }
+}
 
 export function setToken(token: string | null) {
     state.token = token
@@ -93,7 +93,7 @@ export function getRole() {
 
 export async function getUserData(email: string) {
     try {
-        const userDataResponse = await fetch(`http://localhost:4746/Users/ByEmail?userEmail=${email}`, {
+        const userDataResponse = await fetch(`http://localhost:4746/Users/by-email?userEmail=${email}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${getToken()}`

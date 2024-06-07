@@ -1,27 +1,25 @@
 <script setup lang="ts">
-    import { useUsersStore } from '@/stores/users'
-    import { getToken } from '@/stores/auth'
-    import { useI18n } from 'vue-i18n'
+import { useUsersStore } from '@/stores/users'
+import { getToken } from '@/stores/auth'
+import { useI18n } from 'vue-i18n'
 
-    const store = useUsersStore()
-    const token = getToken()
+const store = useUsersStore()
+const token = getToken()
 
-    const { t } = useI18n()
+const { t } = useI18n()
 
-    if (token) {
-      store.GetAllUsers(token) 
-    }
+store.GetAllUsers(token) 
 
-    const deleteUser = async (userId: number) => {
-    const success = await store.DeleteUser(userId, token)
+const deleteUser = async (userId: number) => {
+  const success = await store.DeleteUser(userId, token)
 
-    if (success) {
-      console.log('Usuario eliminado con éxito')
-      store.GetAllUsers(token)
-    } else {
-      console.error('Error al eliminar el usuario')
-    }
+  if (success) {
+    console.log('Usuario eliminado con éxito')
+    store.GetAllUsers(token)
+  } else {
+    console.error('Error al eliminar el usuario')
   }
+}
 </script>
 
 <template>
@@ -74,7 +72,8 @@
           <td>{{ user.wallet }} €</td>
           <td>{{ user.role }}</td>
           <td>
-            <v-btn @click="deleteUser(user.id)">{{ t('EliminarBtn') }}</v-btn></td>
+            <v-btn @click="deleteUser(user.id)">{{ t('EliminarBtn') }}</v-btn>
+          </td>
         </tr>
       </tbody>
     </v-table>
@@ -86,6 +85,7 @@
       display: flex;
       justify-content: center;
       margin-top: 60px;
+      margin-bottom: 50px;
   }
 
   .v-table {

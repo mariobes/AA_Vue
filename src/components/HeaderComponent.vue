@@ -32,7 +32,7 @@ const changeLanguage = () => {
 
 <template>
     <v-toolbar>
-        <v-btn @click="changeLanguage">{{ currentLanguageLabel }}</v-btn>
+        <v-btn @click="changeLanguage"><b>{{ currentLanguageLabel }}</b></v-btn>
         <RouterLink to="/" class="toolbar-title"><h1>CryptoApp</h1></RouterLink>
         <v-spacer></v-spacer>
         <v-text-field

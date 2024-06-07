@@ -42,6 +42,12 @@ const router = createRouter({
       name: 'updateCrypto',
       component: () => import('../views/UpdateCryptoView.vue'),
       beforeEnter: guard,
+    },
+    {
+      path: '/addCrypto',
+      name: 'addCrypto',
+      component: () => import('../views/AddCryptoView.vue'),
+      beforeEnter: guard,
     }
   ]
 })

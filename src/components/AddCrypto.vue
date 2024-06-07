@@ -1,72 +1,45 @@
 <script setup lang="ts">
-    import { onMounted, ref, watch } from 'vue'
-    import { useRoute } from 'vue-router'
-    import type { Crypto, UpdateCrypto } from '@/core/crypto'
-    import { useCryptosStore } from '@/stores/cryptos'
+    import { ref } from 'vue'
+    import { useCryptosStore  } from '@/stores/cryptos'
     import router from '@/router';
     import { getToken } from '@/stores/auth'
     import { useI18n } from 'vue-i18n'
 
     const token = getToken()
-
     const store = useCryptosStore()
-    const route = useRoute()
-    const crypto = ref<Crypto | null>(null)
+    const errorMessage = ref('')
 
     const name = ref('')
     const symbol = ref('')
     const value = ref<number | null>(null)
     const developer = ref('')
     const description = ref('')
-    const descentralized = ref<boolean | null>(null)
+    const descentralized = ref<boolean>(false)
     
     const valid = ref(false)
 
     const { t } = useI18n()
 
-    const loadCrypto = () => {
-        const cryptoId = parseInt(route.params.id as string)
-        crypto.value = store.cryptos.find((c: { id: number; }) => c.id === cryptoId) || null
-        console.log(cryptoId);
-
-        if (crypto.value) {
-            name.value = crypto.value.name;
-            symbol.value = crypto.value.symbol;
-            value.value = crypto.value.value;
-            developer.value = crypto.value.developer;
-            description.value = crypto.value.description;
-            descentralized.value = crypto.value.descentralized;
-        }
-    }
-    
-    onMounted(() => {
-        loadCrypto()
-    })
-
-    watch(route, () => {
-        loadCrypto()
-
-    })
-
     const handleSubmit = async () => {
-        const cryptoId = parseInt(route.params.id as string)
-        const updatedCrypto: UpdateCrypto = {
-            name: name.value,
-            symbol: symbol.value,
-            value: value.value!,
-            developer: developer.value,
-            description: description.value,
-            descentralized: descentralized.value!,
+        try {
+            errorMessage.value = ''
+            const cryptoRegistered = await store.AddCrypto(name.value, symbol.value, description.value, value.value, developer.value, descentralized.value, token)
+            if (cryptoRegistered) {
+                router.push({ name: 'home' })
+            } else {
+                errorMessage.value = 'Error. Alguno de los parámetros es incorrecto o el nombre introducido ya se encuentra registrado.'
+            }
+        } catch (error) {
+            console.error('Se ha producido un error al actualizar la criptomoneda: ', error)
+            throw error
         }
-
-        await store.UpdateCrypto(cryptoId, updatedCrypto, token)
-        router.push({ name: 'home' })
     }
 </script>
 
 <template>
   <v-form v-model="valid" @submit.prevent="handleSubmit">
     <v-container>
+      <h2 class="title-add-crypto">{{ t('TituloRegistrarCripto') }}</h2>
       <v-row>
         <v-col
           cols="12"
@@ -132,7 +105,8 @@
             :label="t('DescentralizadaCriptoPregunta')"
             required
           ></v-checkbox>
-          <v-btn class="mt-2" type="submit">{{ t('EditarBtn') }}</v-btn>
+          <v-btn class="mt-2" type="submit">{{ t('RegistrarBtn') }}</v-btn>
+          <v-alert v-if="errorMessage" type="error" class="mt-2">{{ errorMessage }}</v-alert>
         </v-col>
       </v-row>
     </v-container>
@@ -149,4 +123,14 @@
     background-color: #52a7f7;
     margin-bottom: 50px
   }
+
+  .title-add-crypto {
+    text-align: center; 
+    padding-bottom: 50px;
+    font-size: 30px 
+  }
+
+  .v-alert {
+        margin-bottom: 30px;
+    }
 </style>

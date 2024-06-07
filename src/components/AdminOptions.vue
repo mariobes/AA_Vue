@@ -18,6 +18,10 @@ const isLoggedInComputed = computed(() => isLoggedIn())
 const listUsers = () => {
   router.push('/listUsers')
 }
+
+const addCrypto = () => {
+  router.push('/addCrypto')
+}
 </script>
 
 <template>
@@ -25,6 +29,7 @@ const listUsers = () => {
       <h2>{{ t('TituloAdministrador') }}</h2>
     </div>
     <div class="d-flex justify-center adminOptions">
+      <v-btn color="primary" @click="addCrypto">{{ t('RegistrarCriptoBtn') }}</v-btn>
       <v-btn color="primary" @click="listUsers">{{ t('ListaUsuariosBtn') }}</v-btn>
       <v-btn color="red" @click="handleLogout" v-if="isLoggedInComputed">{{ t('CerrarSesionBtn') }}</v-btn>
     </div>
