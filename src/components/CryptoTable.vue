@@ -19,7 +19,9 @@ const userData = ref({})
 const amount = ref<number>(0)
 const dialog = ref(false) 
 const sortBy = ref('value')
-const switchState = ref(false)
+const switchSortBy = ref(false)
+const order = ref('asc')
+const switchOrder = ref(false)
 
 const { t } = useI18n()
 
@@ -36,9 +38,14 @@ const handleBuy = async (cryptoId: number) => {
   }
 }
 
-const toggleOrder = () => {
+const toggleSortBy = () => {
   sortBy.value = sortBy.value === 'value' ? 'name' : 'value' 
-  GetAllCryptos(sortBy.value) 
+  GetAllCryptos(sortBy.value, order.value) 
+}
+
+const toggleOrder = () => {
+  order.value = order.value === 'asc' ? 'desc' : 'asc' 
+  GetAllCryptos(sortBy.value, order.value) 
 }
 
 onMounted(async () => {
@@ -56,20 +63,23 @@ const deleteCrypto = async (cryptoId: number) => {
 
   if (success) {
     console.log('Criptomoneda eliminada con éxito')
-    storeCryptos.GetAllCryptos(sortBy.value)
+    storeCryptos.GetAllCryptos(sortBy.value, order.value)
   } else {
     console.error('Error al eliminar la criptomoneda')
   }
 }
 
-GetAllCryptos(sortBy.value)
+GetAllCryptos(sortBy.value, order.value) 
 </script>
 
 <template>
 
 
   <div class="table-container">
-    <v-switch :label="t('TextoOrdenar')" v-model="switchState" @change="toggleOrder"></v-switch>
+    <div class="order-options">
+      <v-switch :label="t('TextoOrdenar')" v-model="switchSortBy" @change="toggleSortBy"></v-switch>
+      <v-switch :label="t('TextoOrdenar')" v-model="switchOrder" @change="toggleOrder"></v-switch>
+    </div>
     <v-table class="table">
       <thead>
         <tr>
@@ -163,7 +173,7 @@ GetAllCryptos(sortBy.value)
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      margin-top: 60px;
+      margin-top: 30px;
       margin-bottom: 50px;
   }
 
@@ -237,5 +247,10 @@ GetAllCryptos(sortBy.value)
   .admin-btn {
     display: flex;
     max-width: 120px;
+  }
+
+  .order-options, .v-switch {
+    display: flex;
+    margin: 10px 30px;
   }
 </style>

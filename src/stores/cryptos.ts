@@ -7,9 +7,9 @@ export const useCryptosStore = defineStore('cryptos', () => {
     const cryptos = ref<Crypto[]>([])
 
 
-  async function GetAllCryptos(sortBy: string) {
+  async function GetAllCryptos(sortBy: string, order: string) {
     try {
-        const response = await fetch(`http://localhost:4746/Cryptos?SortBy=${sortBy}`)
+        const response = await fetch(`http://localhost:4746/Cryptos?SortBy=${sortBy}&Order=${order}`)
         const cryptosInfo = await response.json()
         cryptos.value = cryptosInfo
     } catch (error) {
