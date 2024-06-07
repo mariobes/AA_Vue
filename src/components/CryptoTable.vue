@@ -5,6 +5,8 @@ import { useTransactionsStore } from '@/stores/transactions'
 import { getToken, useAuth, getUserData } from '@/stores/auth'
 import { useI18n } from 'vue-i18n'
 
+const { GetAllCryptos } = useCryptosStore()
+
 const token = getToken()
 const { role } = useAuth()
 
@@ -16,6 +18,8 @@ const storedEmail = localStorage.getItem('email')
 const userData = ref({})
 const amount = ref<number>(0)
 const dialog = ref(false) 
+const sortBy = ref('value')
+const switchState = ref(false)
 
 const { t } = useI18n()
 
@@ -32,20 +36,41 @@ const handleBuy = async (cryptoId: number) => {
   }
 }
 
+const toggleOrder = () => {
+  sortBy.value = sortBy.value === 'value' ? 'name' : 'value' 
+  GetAllCryptos(sortBy.value) 
+}
+
 onMounted(async () => {
   try {
-    if (storedEmail) {
+    if ((storedEmail) && (token)) {
       userData.value = await getUserData(storedEmail)
     }
   } catch (error) {
     console.error('Error al obtener los datos del usuario: ', error)
   }
 })
+
+const deleteCrypto = async (cryptoId: number) => {
+  const success = await storeCryptos.DeleteCrypto(cryptoId, token)
+
+  if (success) {
+    console.log('Criptomoneda eliminada con éxito')
+    storeCryptos.GetAllCryptos(sortBy.value)
+  } else {
+    console.error('Error al eliminar la criptomoneda')
+  }
+}
+
+GetAllCryptos(sortBy.value)
 </script>
 
 <template>
+
+
   <div class="table-container">
-    <v-table>
+    <v-switch :label="t('TextoOrdenar')" v-model="switchState" @change="toggleOrder"></v-switch>
+    <v-table class="table">
       <thead>
         <tr>
           <th>
@@ -81,14 +106,18 @@ onMounted(async () => {
           <td>{{ crypto.developer }}</td>
           <td>{{ crypto.descentralized ? 'Sí' : 'No' }}</td>
           <td v-if="role === 'admin'">
-            <RouterLink :to="{ path: `/updateCrypto/${crypto.id}` }" class="card-btn">
-              <v-btn>{{ t('EditarBtn') }}</v-btn>
-            </RouterLink>
+            <div class="admin-btn">
+              <RouterLink :to="{ path: `/updateCrypto/${crypto.id}` }" class="card-btn">
+                <v-btn class="edit-btn">{{ t('EditarBtn') }}</v-btn>
+              </RouterLink>
+              <v-btn class="delete-btn" @click="deleteCrypto(crypto.id)">{{ t('EliminarBtn') }}</v-btn>
+            </div>
           </td>
           <td v-if="role === 'user'">
             <v-dialog max-width="300">
               <template v-slot:activator="{ props: activatorProps }">
                 <v-btn
+                  class="buy-crypto-btn"
                   v-bind="activatorProps"
                   :text="t('ComprarBtn')"
                   variant="flat"
@@ -106,7 +135,7 @@ onMounted(async () => {
                   <v-card-text>
                     <v-text-field
                       v-model="amount"
-                      label="EUROS"
+                      :label="t('TextoMoneda')"
                       type="number"
                     ></v-text-field>
                   </v-card-text>
@@ -131,8 +160,11 @@ onMounted(async () => {
 <style scoped>
   .table-container {
       display: flex;
+      flex-direction: column;
       justify-content: center;
+      align-items: center;
       margin-top: 60px;
+      margin-bottom: 50px;
   }
 
   .v-table {
@@ -159,7 +191,7 @@ onMounted(async () => {
     color: #000; 
   }
 
-  .v-btn {
+  .edit-btn, .buy-btn, .buy-crypto-btn {
       display: flex;
       margin-left: auto;
       margin-right: auto;
@@ -170,6 +202,13 @@ onMounted(async () => {
 
   .buy-btn {
     margin-bottom: 30px;
+  }
+
+  .delete-btn {
+    color: #ff0000;
+    font-weight: bold;
+    border: 1px solid #ff0000;
+    margin-left: 10px;
   }
 
   .card-btn {
@@ -193,5 +232,10 @@ onMounted(async () => {
 
   .background-gray {
     background-color: #ddd
+  }
+
+  .admin-btn {
+    display: flex;
+    max-width: 120px;
   }
 </style>

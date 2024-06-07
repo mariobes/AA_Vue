@@ -92,7 +92,7 @@ onMounted(async () => {
           <v-card-text>
             <v-text-field
               v-model="amount"
-              label="EUROS"
+              :label="t('TextoMoneda')"
               type="number"
             ></v-text-field>
           </v-card-text>

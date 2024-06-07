@@ -3,6 +3,7 @@
     "SimboloCripto": "Símbolo",
     "ValorCripto": "Valor",
     "Moneda": "€",
+    "TextoMoneda": "EURO",
     "DesarrolladorCripto": "Desarrollador",
     "DescripcionCripto": "Descripción",
     "FechaRegistroCripto": "Fecha de registro",
@@ -26,6 +27,7 @@
 
     "TituloAdministrador": "Modo Administrador",
     "CerrarSesionBtn": "Cerrar sesión",
+    "RegistrarCriptoBtn": "Registrar criptomoneda"                                                 ,
     "ListaUsuariosBtn": "Lista de usuarios",
     "MiCuenta": "Mi cuenta",
     "IngresarDineroBtn": "Ingresar dinero",
@@ -47,5 +49,9 @@
 
     "ComprarBtn": "Comprar",
     "EditarBtn": "Editar",
-    "EliminarBtn": "Eliminar"
+    "EliminarBtn": "Eliminar",
+    "RegistrarBtn": "Registrar",
+
+    "TituloRegistrarCripto": "Registrar nueva criptomoneda",
+    "TextoOrdenar": "Ordenar por Valor o Nombre"
 }
