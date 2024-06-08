@@ -77,7 +77,7 @@ GetAllCryptos(sortBy.value, order.value)
 
   <div class="table-container">
     <div class="order-options">
-      <v-switch :label="t('TextoOrdenar')" v-model="switchSortBy" @change="toggleSortBy"></v-switch>
+      <v-switch :label="t('TextoOrdenarPor')" v-model="switchSortBy" @change="toggleSortBy"></v-switch>
       <v-switch :label="t('TextoOrdenar')" v-model="switchOrder" @change="toggleOrder"></v-switch>
     </div>
     <v-table class="table">
@@ -251,6 +251,6 @@ GetAllCryptos(sortBy.value, order.value)
 
   .order-options, .v-switch {
     display: flex;
-    margin: 10px 30px;
+    margin: 10px 50px;
   }
 </style>

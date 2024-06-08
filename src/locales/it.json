@@ -53,5 +53,6 @@
     "RegistrarBtn": "Registrare",
 
     "TituloRegistrarCripto": "Registrare nuova criptovaluta",
-    "TextoOrdenar": "Ordina per Valore o Nome"
+    "TextoOrdenarPor": "Ordina per Valore o Nome",
+    "TextoOrdenar": "asc o desc"
 }

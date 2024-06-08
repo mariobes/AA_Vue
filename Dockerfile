@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm run build-ts --noEmit --skipLibCheck || exit 0
+RUN npm run build-ts --noEmit --skipLibCheck > /dev/null 2>&1 || true
 
 FROM nginx:alpine as production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html

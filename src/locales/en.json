@@ -53,5 +53,6 @@
     "RegistrarBtn": "Register",
 
     "TituloRegistrarCripto": "Register new cryptocurrency",
-    "TextoOrdenar": "Sort by Value or Name"
+    "TextoOrdenarPor": "Sort by Value or Name",
+    "TextoOrdenar": "asc o desc"
 }
